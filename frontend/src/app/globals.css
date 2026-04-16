@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Highway Theme Variables */
+    --background: 222.2 84% 4.9%; /* Near Black (like asphalt) */
+    --foreground: 210 40% 98%;
+
+    /* Yellow Safety Highlights (Reflective Yellow) */
+    --primary: 50 100% 50%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    /* Secondary / UI elements */
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Dark Cards */
+    --card: 222.2 84% 8%;
+    --card-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+
+    /* Red SOS Button (Standard Emergency Red) */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
