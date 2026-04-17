@@ -9,18 +9,18 @@ import { AuthRequest } from "../middlewares/auth";
  * Generate JWT access token
  */
 const generateAccessToken = (userId: string, role: string): string => {
-  return jwt.sign({ userId, role }, config.jwtSecret, {
-    expiresIn: config.jwtExpiresIn,
-  });
+  return jwt.sign({ userId, role }, config.jwtSecret as jwt.Secret, {
+    expiresIn: config.jwtExpiresIn as string,
+  } as jwt.SignOptions);
 };
 
 /**
  * Generate JWT refresh token
  */
 const generateRefreshToken = (userId: string): string => {
-  return jwt.sign({ userId }, config.jwtRefreshSecret, {
-    expiresIn: config.jwtRefreshExpiresIn,
-  });
+  return jwt.sign({ userId }, config.jwtRefreshSecret as jwt.Secret, {
+    expiresIn: config.jwtRefreshExpiresIn as string,
+  } as jwt.SignOptions);
 };
 
 /**

@@ -12,6 +12,8 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "10000"
       - key: MONGODB_URI
         sync: false  # You'll set this manually in Render dashboard
       - key: JWT_SECRET
@@ -31,9 +33,13 @@ services:
     runtime: node
     rootDir: frontend
     buildCommand: npm install && npm run build
-    startCommand: npm run start
+    startCommand: node .next/standalone/server.js
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "10000"
+      - key: HOSTNAME
+        value: "0.0.0.0"
       - key: NEXT_PUBLIC_API_URL
         sync: false  # Set to your backend Render URL + /api

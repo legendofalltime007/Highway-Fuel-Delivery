@@ -63,11 +63,12 @@ const startServer = async () => {
   // Seed default admin account
   await seedAdmin();
 
-  server.listen(config.port, () => {
+  const HOST = "0.0.0.0";
+  server.listen(config.port, HOST, () => {
     console.log(`
 ╔══════════════════════════════════════════════╗
 ║   🚛 Highway Fuel Delivery API              ║
-║   Running on: http://localhost:${config.port}         ║
+║   Running on: http://${HOST}:${config.port}            ║
 ║   Environment: ${process.env.NODE_ENV || "development"}              ║
 ╚══════════════════════════════════════════════╝
     `);
