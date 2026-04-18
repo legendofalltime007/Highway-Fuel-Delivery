@@ -18,19 +18,38 @@ import adminRoutes from "./routes/adminRoutes";
 const app = express();
 const server = http.createServer(app);
 
-// Parse CORS origins (supports comma-separated list for multiple frontends)
-const corsOrigins = config.corsOrigin.split(",").map((o) => o.trim());
+// Parse CORS origins (supports '*' for all or comma-separated list)
+const rawCorsOrigin = config.corsOrigin;
+const isWildcard = rawCorsOrigin.trim() === "*";
+
+// Build a CORS origin value that works correctly:
+// - If '*', use a callback that reflects the requesting origin (needed with credentials)
+// - Otherwise, split comma-separated list into an array
+const corsOriginConfig: any = isWildcard
+  ? (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      callback(null, true); // Allow all origins
+    }
+  : rawCorsOrigin.split(",").map((o) => o.trim());
+
+const corsOptions = {
+  origin: corsOriginConfig,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
 // Initialize Socket.io
 const io = new SocketIOServer(server, {
   cors: {
-    origin: corsOrigins,
+    origin: isWildcard ? true : rawCorsOrigin.split(",").map((o) => o.trim()),
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
 // ─── Middleware ───────────────────────────────────────────
-app.use(cors({ origin: corsOrigins, credentials: true }));
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Handle preflight for all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

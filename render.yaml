@@ -25,14 +25,14 @@ services:
       - key: JWT_REFRESH_EXPIRES_IN
         value: 7d
       - key: CORS_ORIGIN
-        sync: false  # Set to your frontend Render URL after deploying
+        value: "https://highway-fuel-delivery.onrender.com"
 
-  # Frontend (Next.js)
+  # Frontend (Next.js with standalone output)
   - type: web
     name: highway-fuel-frontend
     runtime: node
     rootDir: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build && cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public
     startCommand: node .next/standalone/server.js
     envVars:
       - key: NODE_ENV
@@ -42,4 +42,4 @@ services:
       - key: HOSTNAME
         value: "0.0.0.0"
       - key: NEXT_PUBLIC_API_URL
-        sync: false  # Set to your backend Render URL + /api
+        value: "https://highway-fuel-backend.onrender.com/api"
