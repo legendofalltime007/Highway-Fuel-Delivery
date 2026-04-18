@@ -88,8 +88,11 @@ export default function RequestFuelPage() {
           <div className="w-3 h-3 bg-destructive rounded-full animate-pulse" />
           <span className="font-bold uppercase tracking-wider text-sm">Emergency Dispatch</span>
         </div>
-        <Link href="/">
-          <Button variant="ghost" size="sm">Cancel</Button>
+        <Link
+          href="/"
+          className="inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-3 hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+        >
+          Cancel
         </Link>
       </header>
 
